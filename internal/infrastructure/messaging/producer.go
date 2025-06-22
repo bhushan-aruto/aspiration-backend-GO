@@ -70,8 +70,8 @@ func (p *RabbitMQProducer) SendMail(message EmailMesg, priority int) error {
 	if err != nil {
 		log.Println("failed to publish the messsage")
 	}
-
 	log.Println("message published to queue :", queueName)
+
 	return nil
 
 }
@@ -79,7 +79,7 @@ func (p *RabbitMQProducer) SendMail(message EmailMesg, priority int) error {
 func (p *RabbitMQProducer) SendWelcomeMail(to, name string) error {
 	msg := EmailMesg{
 		To:        to,
-		Subject:   "Welcome!",
+		Subject:   "Welcome to Aspiration Matters 🎉",
 		EmailType: "welcome",
 		Data: map[string]string{
 			"name": name,

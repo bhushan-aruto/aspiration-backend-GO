@@ -14,7 +14,7 @@ type ContactUsecase interface {
 	GenerateWhatsAppURL(req models.WhatsAppContactRequest, cfg *config.Config) (string, error)
 }
 
-type ContactUs struct{
+type ContactUs struct {
 }
 
 func NewContactUs() *ContactUs {
@@ -22,15 +22,17 @@ func NewContactUs() *ContactUs {
 }
 
 func (u *ContactUs) SendEmailUseCse(req models.EmailContactRequest, cfg *config.Config) error {
-
 	body := fmt.Sprintf("Name: %s\nEmail: %s\nMessage: %s", req.Name, req.Email, req.Message)
 
-	msg := []byte("To: " + cfg.ToEmail + "\r\n" +
+	msg := []byte("From: " + cfg.FromEmail + "\r\n" +
+		"To: " + cfg.ToEmail + "\r\n" +
 		"Subject: New Contact Message\r\n" +
+		"MIME-Version: 1.0\r\n" +
+		"Content-Type: text/plain; charset=\"utf-8\"\r\n" +
 		"\r\n" +
 		body + "\r\n")
 
-	auth := smtp.PlainAuth("", cfg.FromEmail, cfg.EmailAppPassword, cfg.SmtpHost)
+	auth := smtp.PlainAuth("", "apikey", cfg.EmailAppPassword, cfg.SmtpHost)
 
 	return smtp.SendMail(cfg.SmtpHost+":"+cfg.SmtpPort, auth, cfg.FromEmail, []string{cfg.ToEmail}, msg)
 }
