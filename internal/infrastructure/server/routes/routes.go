@@ -171,6 +171,7 @@ func InitRoutes(
 	contactGroup := e.Group("/contact")
 	contactGroup.POST("/email", contactHandler.HandleEmailContact)
 	contactGroup.POST("/whatsapp", contactHandler.HandleWhatsAppContact)
+	contactGroup.POST("/course-enquiry", contactHandler.CourseEnqiryHandler)
 
 	//payment gateway
 	paymentGroup := e.Group("/payment")

@@ -96,10 +96,10 @@ func (h *PaymentHandler) VerifyPaymentHandler(ctx echo.Context) error {
 				"error": "failed to save purchase history: " + err.Error(),
 			})
 		}
-
+		
 		if err := paymentUseCase.DeleteCartUseCase(req.UserID, courseID); err != nil {
 			return ctx.JSON(500, echo.Map{
-				"error": "failed to delete purchase history: " + err.Error(),
+				"error": "failed to deleted carted course : " + err.Error(),
 			})
 		}
 	}

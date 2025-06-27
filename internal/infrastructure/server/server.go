@@ -17,7 +17,7 @@ func StartServer(cfg *config.Config, dbConn *database.MongoDBdatabase, producer 
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"http://localhost:3000",
-			"https://aspiration-website-dup6.vercel.app",
+			"https://www.aspirationmatters.com",
 		},
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 		AllowHeaders: []string{echo.HeaderContentType, echo.HeaderAuthorization},

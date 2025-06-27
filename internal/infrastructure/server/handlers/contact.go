@@ -49,3 +49,23 @@ func (h *ContactHandler) HandleWhatsAppContact(c echo.Context) error {
 
 	return c.JSON(200, echo.Map{"redirect_url": link})
 }
+
+func (h *ContactHandler) CourseEnqiryHandler(c echo.Context) error {
+	var req models.EamilCourseEnquiryRequest
+
+	if err := c.Bind(&req); err != nil {
+		return c.JSON(400, echo.Map{
+			"error": err.Error(),
+		})
+	}
+	if err := h.contactUC.SendEnquiryCourseUsecase(req, h.cfg); err != nil {
+		return c.JSON(500, echo.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(200, echo.Map{
+		"message": "enquiry sent successfully",
+	})
+
+}
