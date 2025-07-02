@@ -49,7 +49,6 @@ Message:
 	return smtp.SendMail(cfg.SmtpHost+":"+cfg.SmtpPort, auth, cfg.FromEmail, []string{cfg.ToEmail}, msg)
 }
 
-
 func (u *ContactUs) GenerateWhatsAppURL(req models.WhatsAppContactRequest, cfg *config.Config) (string, error) {
 	msg := fmt.Sprintf(
 		`You have received a new WhatsApp inquiry:
