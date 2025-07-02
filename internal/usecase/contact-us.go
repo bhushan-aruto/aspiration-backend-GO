@@ -23,7 +23,18 @@ func NewContactUs() *ContactUs {
 }
 
 func (u *ContactUs) SendEmailUseCse(req models.EmailContactRequest, cfg *config.Config) error {
-	body := fmt.Sprintf("Name: %s\nEmail: %s\nMessage: %s", req.Name, req.Email, req.Message)
+	body := fmt.Sprintf(`
+You have received a new contact message:
+
+----------------------------------------
+Name     : %s
+Email    : %s
+Type     : %s
+----------------------------------------
+
+Message:
+%s
+`, req.Name, req.Email, req.Type, req.Message)
 
 	msg := []byte("From: " + cfg.FromEmail + "\r\n" +
 		"To: " + cfg.ToEmail + "\r\n" +
@@ -38,9 +49,18 @@ func (u *ContactUs) SendEmailUseCse(req models.EmailContactRequest, cfg *config.
 	return smtp.SendMail(cfg.SmtpHost+":"+cfg.SmtpPort, auth, cfg.FromEmail, []string{cfg.ToEmail}, msg)
 }
 
-func (u *ContactUs) GenerateWhatsAppURL(req models.WhatsAppContactRequest, cfg *config.Config) (string, error) {
 
-	msg := fmt.Sprintf("Name: %s\nPhone: %s\nMessage: %s", req.Name, req.Phone, req.Message)
+func (u *ContactUs) GenerateWhatsAppURL(req models.WhatsAppContactRequest, cfg *config.Config) (string, error) {
+	msg := fmt.Sprintf(
+		`You have received a new WhatsApp inquiry:
+
+Name    : %s
+Phone   : %s
+Type    : %s
+
+Message :
+%s`, req.Name, req.Phone, req.Type, req.Message)
+
 	return fmt.Sprintf("https://wa.me/%s?text=%s", cfg.WhatspNumber, url.QueryEscape(msg)), nil
 }
 

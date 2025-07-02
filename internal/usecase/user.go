@@ -73,10 +73,6 @@ func (u *UserUseCase) SendOTP(email, password string) (string, error) {
 		return "", errors.New("user not found")
 	}
 
-	// if user == nil {
-	// 	return "", errors.New("user not found")
-	// }
-
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return "", errors.New("password does not match")
 	}
@@ -103,10 +99,6 @@ func (u *UserUseCase) UserLogin(email, password string) (string, error) {
 	if err != nil {
 		return "", errors.New("user not found")
 	}
-
-	// if user == nil {
-	// 	return "", errors.New("user not found")
-	// }
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		log.Println("Password mismatch error:", err)
